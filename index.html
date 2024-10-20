@@ -1,7 +1,7 @@
   <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
  <HEAD>
-  <TITLE> Trái tim  </TITLE>
+  <TITLE> Our love 4 you  </TITLE>
   <META NAME="Generator" CONTENT="EditPlus">
   <META NAME="Author" CONTENT="">
   <META NAME="Keywords" CONTENT="">
@@ -11,7 +11,8 @@
   height: 100%;
   padding: 0;
   margin: 0;
-  background: #000000;
+
+
 
 
 }
@@ -25,14 +26,62 @@ canvas {
     padding-top: 20%;
     text-align: center;
 }
+.light-mode-footer {
+    display: none;
+}
 
+/* Hiển thị footer khi chế độ light-mode được bật */
+/* Đảm bảo toàn bộ trang chiếm hết chiều cao của màn hình */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Mặc định ẩn header và footer */
+.light-mode-header, .light-mode-footer {
+    display: none;
+}
+
+/* Hiển thị header và footer khi chế độ light-mode được bật */
+.light-mode .light-mode-header {
+    display: block;
+    background-color: #f8f8f8;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .light-mode-footer {
+    display: block;
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Định dạng nội dung để chiếm toàn bộ không gian phía trên footer */
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Đặt footer ở cuối trang */
+.footer {
+    position: relative;
+    bottom: 0;
+}
 
   </style>
  </HEAD>
  
  <BODY>
+  <div class="overlay"></div>
   <canvas id="pinkboard"></canvas>
-  <h1 class="chu">Ri Do = 0 WC</h1>
+  <h1 class="chu"></h1>
   <script>
   /*
  * Settings
@@ -43,7 +92,7 @@ var settings = {
     duration:   2, // particle duration in sec
     velocity: 100, // particle velocity in pixels/sec
     effect: -0.75, // play with this for a nice effect
-    size:      30, // particle size in pixels
+    size:      50, // particle size in pixels
   },
 };
  
@@ -268,13 +317,19 @@ var ParticlePool = (function() {
     render();
   }, 10);
 })(document.getElementById('pinkboard'));
+function setLightMode() {
+    document.body.classList.remove('dark-mode');
+    document.body.classList.add('light-mode');
+    canvas.style.display = 'none'; // Ẩn canvas khi ở chế độ sáng
+}
+
+function setDarkMode() {
+    document.body.classList.remove('light-mode');
+    document.body.classList.add('dark-mode');
+    canvas.style.display = 'block'; // Hiện canvas khi ở chế độ tối
+    startParticleEffect(); // Bắt đầu hiệu ứng hạt
+}
   </script>
-  <!DOCTYPE html>
-  <html lang="vi">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Chọn Chế Độ Sáng/Tối</title>
       <style>
           body {
               transition: background-color 0.3s, color 0.3s;
@@ -319,10 +374,64 @@ var ParticlePool = (function() {
               margin-top: 20px; /* Khoảng cách trên */
           }
   
-          /* Hiển thị dòng chữ chỉ khi chế độ sáng */
-          body.light-mode .light-message {
-              display: block; /* Hiển thị khi ở chế độ sáng */
-          }
+          /* Đảm bảo toàn bộ trang chiếm hết chiều cao của màn hình */
+h/* Đảm bảo toàn bộ trang chiếm hết chiều cao của màn hình */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Mặc định ẩn header */
+.light-mode-header {
+    display: none;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #f8f8f8;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Hiển thị header khi chế độ light-mode được bật */
+.light-mode .light-mode-header {
+    display: block;
+}
+
+/* Định dạng nội dung để chiếm toàn bộ không gian giữa header và footer */
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-top: 60px; /* Dành không gian cho header cố định */
+}
+
+/* Mặc định ẩn footer */
+.light-mode-footer {
+    display: none;
+}
+
+/* Hiển thị footer khi chế độ light-mode được bật */
+.light-mode .light-mode-footer {
+    display: block;
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Đặt footer ở cuối trang */
+.footer {
+    position: relative;
+    bottom: 0;
+}
+
+
+
+
+          
       </style>
   </head>
   <body class="dark-mode"> <!-- Mặc định là chế độ tối -->
@@ -330,8 +439,6 @@ var ParticlePool = (function() {
           <div class="theme-icon" onclick="setLightMode()">🌝</div> <!-- Biểu tượng cho chế độ sáng -->
           <div class="theme-icon" onclick="setDarkMode()">🌚</div> <!-- Biểu tượng cho chế độ tối -->
       </div>
-  
-      <h2 class="light-message">Mẹ mày béo</h2> <!-- Dòng chữ chỉ hiển thị khi sáng -->
   
       <script>
           function setLightMode() {
@@ -344,7 +451,41 @@ var ParticlePool = (function() {
               document.body.classList.add('dark-mode');
           }
       </script>
-  </body>
+      <script>
+      function setLightMode() {
+        document.body.classList.remove('dark-mode');
+        document.body.classList.add('light-mode');
+        canvas.style.display = 'none'; // Ẩn canvas khi ở chế độ sáng
+    }
+    
+    function setDarkMode() {
+        document.body.classList.remove('light-mode');
+        document.body.classList.add('dark-mode');
+        canvas.style.display = 'block'; // Hiện canvas khi ở chế độ tối
+        startParticleEffect(); // Bắt đầu hiệu ứng hạt
+    }
+  </script>
+<body class="light-mode">
+  <header class="header light-mode-header">
+      Các cậu 20/10 vui vẻ 🌹🌹🌹.
+  </header>
+  <div class="content">
+      <!-- Nội dung chính của trang -->
+  </div>
+  <footer class="footer light-mode-footer">
+      <h3>
+        TIN CỰC HOT:
+      </h3>
+      <h4>
+       <p>  Người deptry nhất thế giới đã được bình chọn👉<a href="https://www.facebook.com/profile.php?id=100041134507925">...</a></p>
+      </h4>
+  </footer>
+</body>
+
+
+  </footer>
+</body>
+
   </html>
   
 </body>
